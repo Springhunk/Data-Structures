@@ -29,22 +29,13 @@ public class DArray {
             throw new IllegalArgumentException();
         }
 
-        // Shift Items to the right
         int[] new_items = new int[count*2];
-        int temp_count = 0;
-        for (int i = 0; i < count; i++) {
-            new_items[i] = items[i];
-            temp_count++;
+        // Copy elements to new_items
+        for (int i = count-1; i >= index; i--) {
+            items[i+1] = items[i];
         }
-
-        for (int j = count; j > index; j--) {
-            remove(items[j]);
-        }
-
         items[index] = item;
-        for (int k = index; k < temp_count; k++) {
-            append(new_items[k]);
-        }
+        count++;
     }
 
     // Extend the array with the value of another array
@@ -90,6 +81,13 @@ public class DArray {
             throw new IllegalArgumentException();
         }
         items[index] = item;
+    }
+
+    public int get(int index) {
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException();
+        }
+        return items[index];
     }
 
     // Bubble Sort
@@ -168,8 +166,8 @@ public class DArray {
 
     // Iterate and print every item in the array
     public void printItems() {
-        for (int i = 0; i < count; i++) {
-            System.out.println(items[i]);
+        for (int i : items) {
+            System.out.println(i);
         }
     }
 }

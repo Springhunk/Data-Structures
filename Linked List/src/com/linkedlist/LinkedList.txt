@@ -1,0 +1,154 @@
+package com.linkedlist;
+
+public class LinkedList <T> {
+    public class Node {
+        private T item;
+        private Node next;
+
+        public Node(T item) {
+            this.item = item;
+        }
+    }
+
+    private int count = 1;
+    private Node head;
+    private Node tail;
+
+    public LinkedList() {
+        this.head = new Node(null);
+        this.tail = this.head;
+    }
+
+    public LinkedList(T item) {
+        this.head = new Node(item);
+        this.tail = this.head;
+    }
+
+    public void insert(int index, T item) {
+        // Need to be fixed.
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException();
+        }
+        Node cur = head;
+        Node new_node = new Node(item);
+        int cur_index = 0;
+        while (cur != null) {
+            if (cur_index == index) {
+                new_node.next = cur.next;
+                cur.next = new_node;
+                break;
+            }
+            cur = cur.next;
+            cur_index++;
+        }
+        count++;
+    }
+
+    public void delete(int index) {
+        // Need to be fixed.
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException();
+        }
+        Node cur = head;
+        int cur_index = 0;
+        while (true) {
+            Node last_node = cur;
+            if (cur_index == index) {
+                last_node.next = cur.next;
+                break;
+            }
+            cur = cur.next;
+            cur_index++;
+        }
+        count--;
+    }
+
+    public void addFirst(T item) {
+        if (isEmpty()) {
+            head = new Node(item);
+        } else {
+            Node new_node = new Node(item);
+            new_node.next = head;
+            head = new_node;
+        }
+        count++;
+    }
+
+    public void addLast(T item) {
+        if (isEmpty()) {
+            head = new Node(item);
+        } else {
+            tail.next = new Node(item);
+            tail = new Node(item);
+        }
+        count++;
+    }
+
+    public void deleteFirst() {
+        head = head.next;
+        count--;
+    }
+
+    public void deleteLast() {
+        delete(length()-1);
+    }
+
+    public T get(int index) {
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException();
+        }
+
+        Node cur = head;
+        int cur_index = 0;
+        while (cur != null) {
+            if (cur_index == index) {
+                return cur.item;
+            }
+            cur = cur.next;
+            cur_index++;
+        }
+        return null;
+    }
+
+    public void set(int index, T item) {
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException();
+        }
+
+        Node cur = head;
+        int cur_index = 0;
+        while (cur != null) {
+            if (cur_index == index) {
+                cur.item = item;
+            }
+            cur = cur.next;
+            cur_index++;
+        }
+    }
+
+    public int length() {
+        return count;
+    }
+
+    public boolean isEmpty() {
+        return length() == 0;
+    }
+
+    public void print() {
+        Node cur = head;
+        StringBuilder res = new StringBuilder("[");
+        while (cur != null) {
+            res.append(cur.item).append(", ");
+            cur = cur.next;
+        }
+        System.out.println(res.substring(0, res.length()-2)+"]");
+    }
+
+    public void printItems() {
+        Node cur = head;
+        while (cur != null) {
+            System.out.println(cur.item);
+            cur = cur.next;
+        }
+    }
+}
